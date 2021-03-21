@@ -10,3 +10,6 @@ class Command {
  }
  
  module.exports = Command;
+
+
+// 3 possible commandTypes: 'MODE_CHANGE', 'MOVE', or 'STATUS_CHECK'.
