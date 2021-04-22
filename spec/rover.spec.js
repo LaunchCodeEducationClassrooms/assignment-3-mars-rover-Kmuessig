@@ -19,7 +19,7 @@ it("response returned by receiveMessage contains name of message", function() {
   let rover = new Rover();
   let message = new Message('Test123')
   let response = rover.receiveMessage(message);
-    expect(response.message).toEqual(message.name);
+    expect(response.message).toEqual('Test123');
   });
 
   //9
@@ -27,21 +27,23 @@ it("response returned by receiveMessage includes two results if two commands are
   let rover = new Rover();
   let message = new Message('Test123',[new Command('MODE_CHANGE', 'LOW_POWER'), new Command('STATUS_CHECK')])
   let response = rover.receiveMessage(message);
-    expect(response.results[0]).toEqual(message.commands);
-    expect(response.results[1]).toEqual(message.commands);
+    expect(response.results.length).toEqual(message.commands.length);
   });
 
   //10
 it("responds correctly to status check command", function() {
   let rover = new Rover (4321);
   let roverStatus = new Command('STATUS_CHECK', rover)
+// console.log(roverStatus)
     expect(roverStatus.value).toEqual(rover);
   });
+ 
+
 
   //11
 it("responds correctly to mode change command", function() {
   let rover = new Rover (4321);
-  let command = new Command('MODE_CHANGE', 'LOW POWER')
+  let command = new Command('MODE_CHANGE', 'LOW_POWER')
   rover.modeChange(command)
     expect(rover.mode).toEqual(command.value);
   });
@@ -49,7 +51,7 @@ it("responds correctly to mode change command", function() {
   //12
 it("responds with false completed value when attempting to move in LOW_POWER mode", function() {
   let rover = new Rover (4321);
-  rover.mode = 'LOW POWER'
+  rover.mode = 'LOW_POWER'
   let command = new Command('MOVE', 98212)
   let result = rover.moveChange(command)
     expect(result.completed).toEqual(false);
